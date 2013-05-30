@@ -12,6 +12,6 @@ import com.google.gwt.user.client.ui.*;
 public class WoodburrySite implements EntryPoint {
 
     public void onModuleLoad() {
-        RootPanel.get().add(new Label("Welcome to Woodburry!"));
+        RootPanel.get().add(new MainPage());
     }
 }

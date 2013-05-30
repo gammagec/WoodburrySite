@@ -1,0 +1,13 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+
+    <g:HTMLPanel styleName="mainPage">
+        <g:HTMLPanel styleName="header">
+        </g:HTMLPanel>
+        <g:HTMLPanel styleName="body">
+            <g:Label>Welcome To Woodburry!</g:Label>
+        </g:HTMLPanel>
+        <g:HTMLPanel styleName="footer">
+        </g:HTMLPanel>
+    </g:HTMLPanel>
+</ui:UiBinder>
