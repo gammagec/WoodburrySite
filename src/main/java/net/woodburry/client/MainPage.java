@@ -2,8 +2,10 @@ package net.woodburry.client;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.ResizeComposite;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -18,8 +20,15 @@ public class MainPage extends Composite {
     }
 
     private static MainPageUiBinder ourUiBinder = GWT.create(MainPageUiBinder.class);
+    @UiField
+    SimplePanel body;
 
     public MainPage() {
+        MainPageClientBundle.INSTANCE.css().ensureInjected();
         initWidget(ourUiBinder.createAndBindUi(this));
+    }
+
+    public void setPage(Widget page) {
+        body.setWidget(page);
     }
 }

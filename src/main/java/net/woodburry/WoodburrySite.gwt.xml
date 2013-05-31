@@ -5,5 +5,11 @@
     <inherits name='com.google.gwt.user.User'/>
 
     <entry-point class='net.woodburry.client.WoodburrySite'/>
+    <servlet path="/WoodburryServlet" class="net.woodburry.server.WoodburryServletImpl"/>
 
+    <add-linker name="xsiframe"/>
+    <set-configuration-property name="devModeRedirectEnabled" value="true"/>
+
+    <source path="client"/>
+    <source path="shared"/>
 </module>
