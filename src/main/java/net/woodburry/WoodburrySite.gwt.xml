@@ -3,6 +3,7 @@
 <module>
 
     <inherits name='com.google.gwt.user.User'/>
+    <inherits name="com.chrisgammage.ginjitsu.GinJitsu"/>
 
     <entry-point class='net.woodburry.client.WoodburrySite'/>
     <servlet path="/WoodburryServlet" class="net.woodburry.server.WoodburryServletImpl"/>

@@ -15,6 +15,8 @@ import net.woodburry.shared.UserInfo;
 public interface WoodburryServlet extends RemoteService {
 
     UserInfo getUser();
+    boolean createUserAccount(String userName, String password);
+    UserInfo login(String userName, String password);
     /**
      * Utility/Convenience class.
      * Use WoodburryServlet.App.getInstance() to access static instance of WoodburryServletAsync

@@ -8,12 +8,15 @@ import com.google.gwt.user.client.ui.ResizeComposite;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
+import javax.inject.Singleton;
+
 /**
  * Created with IntelliJ IDEA.
  * User: gamma_000
  * Date: 5/29/13
  * Time: 11:56 PM
  */
+@Singleton
 public class MainPage extends Composite {
 
     interface MainPageUiBinder extends UiBinder<Widget, MainPage> {

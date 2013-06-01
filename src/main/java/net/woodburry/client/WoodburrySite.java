@@ -1,6 +1,7 @@
 package net.woodburry.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import net.woodburry.client.home_page.HomePage;
@@ -15,22 +16,23 @@ import net.woodburry.shared.UserInfo;
  */
 public class WoodburrySite implements EntryPoint {
 
-    private MainPage mainPage = new MainPage();
+    private WoodburryInjector injector = GWT.create(WoodburryInjector.class);
 
     public void onModuleLoad() {
+        MainPage mainPage = injector.mainPage();
         RootPanel.get().add(mainPage);
         WoodburryServlet.App.getInstance().getUser(new AsyncCallback<UserInfo>() {
             @Override
             public void onFailure(Throwable caught) {
-                mainPage.setPage(new Label("Failed to get User"));
+                injector.mainPage().setPage(new Label("Failed to get User"));
             }
 
             @Override
             public void onSuccess(UserInfo result) {
                 if(result.isLoggedIn()) {
-                    mainPage.setPage(new HomePage());
+                    injector.mainPage().setPage(injector.homePage());
                 } else {
-                    mainPage.setPage(new LoginPage());
+                    injector.mainPage().setPage(injector.loginPage());
                 }
             }
         });

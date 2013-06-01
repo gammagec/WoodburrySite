@@ -16,6 +16,8 @@ public interface LoginPageClientBundle extends ClientBundle {
 
     interface MyCss extends CssResource {
         String loginPageBody();
+
+        String loginPanel();
     }
 
     @Source("LoginPage.css")

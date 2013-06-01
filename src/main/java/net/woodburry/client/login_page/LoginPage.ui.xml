@@ -4,6 +4,19 @@
     <ui:with field="resources" type="net.woodburry.client.login_page.LoginPageClientBundle"/>
 
     <g:HTMLPanel styleName="{resources.css.loginPageBody}">
-
+        <g:HTMLPanel styleName="{resources.css.loginPanel}">
+            <div>
+                <g:Label>Username:</g:Label>
+                <g:TextBox ui:field="username"/>
+            </div>
+            <div>
+                <g:Label>Password:</g:Label>
+                <g:TextBox ui:field="password"/>
+            </div>
+            <div>
+                <g:Button ui:field="submitButton">Login</g:Button>
+                <g:Button ui:field="createAccountButton">Create Account</g:Button>
+            </div>
+        </g:HTMLPanel>
     </g:HTMLPanel>
 </ui:UiBinder>

@@ -4,6 +4,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Singleton;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,6 +12,7 @@ import com.google.gwt.user.client.ui.Widget;
  * Date: 5/30/13
  * Time: 11:06 PM
  */
+@Singleton
 public class HomePage extends Composite {
     interface HomePageUiBinder extends UiBinder<Widget, HomePage> {
     }
