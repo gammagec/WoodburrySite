@@ -33,6 +33,8 @@ public class NewAccountPage extends Composite {
     TextBox password;
     @UiField
     Button submitButton;
+    @UiField
+    TextBox email;
 
     public NewAccountPage() {
         NewAccountPageClientBundle.INSTANCE.css().ensureInjected();
@@ -41,7 +43,7 @@ public class NewAccountPage extends Composite {
 
     @UiHandler("submitButton")
     void onSubmitButtonClicked(ClickEvent event) {
-        WoodburryServlet.App.getInstance().createUserAccount(username.getText(), password.getText(), new AsyncCallback<Boolean>() {
+        WoodburryServlet.App.getInstance().createUserAccount(username.getText(), email.getText(), password.getText(), new AsyncCallback<Boolean>() {
             @Override
             public void onFailure(Throwable caught) {
                 Window.alert("Failure: " + caught);

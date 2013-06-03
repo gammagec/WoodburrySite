@@ -20,6 +20,16 @@ public class WoodburryServletImpl extends RemoteServiceServlet implements Woodbu
     public static final int SALT_BYTES = 24;
     public static final int HASH_BYTES = 24;
     public static final int PBKDF2_ITERATIONS = 1000;
+    private static final String CONNECTOR = "connector";
+
+    private DataConnector dataConnector() {
+        DataConnector dc = (DataConnector)getServletContext().getAttribute(CONNECTOR);
+        if(dc == null) {
+            dc = new SQLDataConnector();
+            getServletContext().setAttribute(CONNECTOR, dc);
+        }
+        return dc;
+    }
 
     @Override
     public UserInfo getUser() {
@@ -33,13 +43,13 @@ public class WoodburryServletImpl extends RemoteServiceServlet implements Woodbu
     // hash [B@3273a006
 
     @Override
-    public boolean createUserAccount(String userName, String password) {
+    public boolean createUserAccount(String userName, String email, String password) {
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[SALT_BYTES];
         random.nextBytes(salt);
 
         // Hash the password
-        byte[] hash = new byte[0];
+        byte[] hash;
         try {
             hash = PasswordHash.pbkdf2(password.toCharArray(), salt, PBKDF2_ITERATIONS, HASH_BYTES);
         } catch (NoSuchAlgorithmException e) {
@@ -52,6 +62,8 @@ public class WoodburryServletImpl extends RemoteServiceServlet implements Woodbu
         // format salt:hash
         System.out.println(PasswordHash.toHex(salt) + ":" +  PasswordHash.toHex(hash));
 
+        dataConnector().createNewUser(userName, email, PasswordHash.toHex(hash), PasswordHash.toHex(salt));
+
         return true;
     }
 
@@ -59,20 +71,24 @@ public class WoodburryServletImpl extends RemoteServiceServlet implements Woodbu
     public UserInfo login(String userName, String password) {
         UserInfo userInfo = new UserInfo();
         userInfo.setLoggedIn(false);
-        if(userName.equalsIgnoreCase("test")) {
-            byte[] salt = PasswordHash.fromHex("4ebe7b80fa372750918855abbb6978edfe93a4d906bbfd52");
-            try {
-                byte[] hash = PasswordHash.pbkdf2(password.toCharArray(), salt, PBKDF2_ITERATIONS, HASH_BYTES);
-                System.out.println("Trying to log in with has " + hash);
-                if(Arrays.equals(hash, PasswordHash.fromHex("936760ffe1ddcca0eb9636869393a0e8daa6ce1297acab7c"))) {
-                    userInfo.setLoggedIn(true);
-                }
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            } catch (InvalidKeySpecException e) {
-                e.printStackTrace();
-            }
+
+        String salt = dataConnector().getSalt(userName);
+        if(salt.length() < 1) {
+            return userInfo;
         }
+
+        try {
+            byte[] hash = PasswordHash.pbkdf2(password.toCharArray(), PasswordHash.fromHex(salt), PBKDF2_ITERATIONS, HASH_BYTES);
+            System.out.println("Trying to log in with has " + hash);
+            if(Arrays.equals(hash, PasswordHash.fromHex("936760ffe1ddcca0eb9636869393a0e8daa6ce1297acab7c"))) {
+                userInfo.setLoggedIn(true);
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+        }
+
         return userInfo;
     }
 }

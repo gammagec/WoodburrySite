@@ -11,6 +11,6 @@ import net.woodburry.shared.UserInfo;
  */
 public interface WoodburryServletAsync {
     void getUser(AsyncCallback<UserInfo> async);
-    void createUserAccount(String userName, String password, AsyncCallback<Boolean> async);
     void login(String userName, String password, AsyncCallback<UserInfo> async);
+    void createUserAccount(String userName, String email, String password, AsyncCallback<Boolean> async);
 }

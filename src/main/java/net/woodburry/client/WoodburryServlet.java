@@ -15,7 +15,7 @@ import net.woodburry.shared.UserInfo;
 public interface WoodburryServlet extends RemoteService {
 
     UserInfo getUser();
-    boolean createUserAccount(String userName, String password);
+    boolean createUserAccount(String userName, String email, String password);
     UserInfo login(String userName, String password);
     /**
      * Utility/Convenience class.
