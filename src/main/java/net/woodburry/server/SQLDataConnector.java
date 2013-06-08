@@ -12,7 +12,6 @@ public class SQLDataConnector implements DataConnector {
 
     private Connection connect = null;
     private Statement statement = null;
-    private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
 
     @Override
@@ -36,7 +35,26 @@ public class SQLDataConnector implements DataConnector {
 
     @Override
     public boolean validateLogin(String userName, String hash) {
-        return false;
+        return getHash(userName).equals(hash);
+    }
+
+    private String getHash(String userName) {
+        connect();
+        String sql = "select password from woodburry_site.users where id = '" + userName + "'";
+        String hash;
+        try {
+            System.out.println("Getting hash for " + userName);
+            resultSet = statement.executeQuery(sql);
+            if(resultSet.next()) {
+                hash = resultSet.getString(1);
+                return hash;
+            } else {
+                return "";
+            }
+        } catch (SQLException e) {
+            System.err.println(e.toString());
+            return "";
+        }
     }
 
     @Override

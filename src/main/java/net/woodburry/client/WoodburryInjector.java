@@ -16,4 +16,5 @@ public interface WoodburryInjector extends JitsuInjector {
     LoginPage loginPage();
     HomePage homePage();
     NewAccountPage newAccountPage();
+    GlobalEventBus globalEventBus();
 }

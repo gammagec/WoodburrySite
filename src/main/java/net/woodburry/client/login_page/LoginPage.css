@@ -1,9 +1,9 @@
 .loginPageBody {
     width: 100%;
     height: 100%;
-    background-color: brown;
 }
 
+@external .loginPanel;
 .loginPanel {
     width: 250px;
     height: 200px;
@@ -11,6 +11,46 @@
     top: 50%;
     margin-left: -125px;
     margin-top: -100px;
-    background-color: lightpink;
+    background-color: green;
     position: absolute;
+}
+
+@external .loginPanel .gwt-Label;
+.loginPanel .gwt-Label {
+    display: inline-block;
+}
+
+@external .loginPanel div;
+.loginPanel div {
+    margin: 10px;
+}
+
+.loginButton {
+    float: right;
+    display: block;
+}
+
+.createAccountButton {
+    float: right;
+    clear: both;
+    margin-top: 20px;
+    color: blue;
+}
+
+.loginSignText {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -25px;
+    margin-top: -185px;
+}
+
+.loginSign {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -50px;
+    margin-top: -200px;
 }

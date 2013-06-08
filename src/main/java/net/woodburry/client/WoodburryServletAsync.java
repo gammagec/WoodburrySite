@@ -1,6 +1,7 @@
 package net.woodburry.client;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import net.woodburry.shared.CreateUserAccountResponse;
 import net.woodburry.shared.UserInfo;
 
 /**
@@ -12,5 +13,6 @@ import net.woodburry.shared.UserInfo;
 public interface WoodburryServletAsync {
     void getUser(AsyncCallback<UserInfo> async);
     void login(String userName, String password, AsyncCallback<UserInfo> async);
-    void createUserAccount(String userName, String email, String password, AsyncCallback<Boolean> async);
+    void logout(AsyncCallback<Void> async);
+    void createUserAccount(String userName, String email, String password, AsyncCallback<CreateUserAccountResponse> async);
 }

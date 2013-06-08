@@ -2,10 +2,13 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
 
     <ui:with field="resources" type="net.woodburry.client.MainPageClientBundle"/>
+    <ui:with field="common" type="net.woodburry.client.common.CommonClientBundle"/>
 
     <g:HTMLPanel styleName="{resources.css.mainPage}">
         <g:HTMLPanel styleName="{resources.css.header}">
+            <g:Button visible="false" ui:field="logoutButton">Logout</g:Button>
         </g:HTMLPanel>
+        <g:Image url="{common.logo.getSafeUri.asString}" addStyleNames="{resources.css.logo}"/>
         <g:SimplePanel styleName="{resources.css.body}" ui:field="body"/>
         <g:HTMLPanel styleName="{resources.css.footer}">
         </g:HTMLPanel>

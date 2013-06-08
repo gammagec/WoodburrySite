@@ -19,6 +19,7 @@ public interface MainPageClientBundle extends ClientBundle {
         String body();
         String mainPage();
         String header();
+        String logo();
     }
 
     @Source("MainPage.css")

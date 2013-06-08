@@ -1,12 +1,18 @@
 package net.woodburry.client;
 
+import com.chrisgammage.ginjitsu.client.AfterInject;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.ResizeComposite;
-import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.*;
+import com.google.inject.Inject;
+import net.woodburry.client.events.LoginEvent;
+import net.woodburry.client.events.LoginEventHandler;
+import net.woodburry.shared.UserInfo;
 
 import javax.inject.Singleton;
 
@@ -25,10 +31,49 @@ public class MainPage extends Composite {
     private static MainPageUiBinder ourUiBinder = GWT.create(MainPageUiBinder.class);
     @UiField
     SimplePanel body;
+    @UiField
+    Button logoutButton;
+
+    @Inject
+    GlobalEventBus eventBus;
 
     public MainPage() {
         MainPageClientBundle.INSTANCE.css().ensureInjected();
         initWidget(ourUiBinder.createAndBindUi(this));
+        logoutButton.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                logout();
+            }
+        });
+    }
+
+    @AfterInject
+    final void afterInject() {
+        eventBus.addHandler(LoginEvent.TYPE, new LoginEventHandler() {
+            @Override
+            public void onLogin(LoginEvent event) {
+                onUserLogin(event.getUserInfo());
+            }
+        });
+    }
+
+    private void onUserLogin(UserInfo userInfo) {
+        logoutButton.setVisible(true);
+    }
+
+    private void logout() {
+        WoodburryServlet.App.getInstance().logout(new AsyncCallback<Void>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                Window.Location.reload();
+            }
+
+            @Override
+            public void onSuccess(Void result) {
+                Window.Location.reload();
+            }
+        });
     }
 
     public void setPage(Widget page) {

@@ -11,6 +11,7 @@ import java.io.Serializable;
 public class UserInfo implements Serializable {
 
     private boolean loggedIn;
+    private String userName;
 
     public boolean isLoggedIn() {
         return loggedIn;
@@ -18,5 +19,13 @@ public class UserInfo implements Serializable {
 
     public void setLoggedIn(boolean loggedIn) {
         this.loggedIn = loggedIn;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

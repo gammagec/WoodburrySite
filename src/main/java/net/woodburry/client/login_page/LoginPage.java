@@ -7,14 +7,14 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.*;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import net.woodburry.client.GlobalEventBus;
 import net.woodburry.client.MainPage;
 import net.woodburry.client.WoodburryServlet;
+import net.woodburry.client.common.Hover;
+import net.woodburry.client.events.LoginEvent;
 import net.woodburry.client.home_page.HomePage;
 import net.woodburry.client.new_account_page.NewAccountPage;
 import net.woodburry.shared.UserInfo;
@@ -32,13 +32,16 @@ public class LoginPage extends Composite {
 
     private static LoginPageUiBinder ourUiBinder = GWT.create(LoginPageUiBinder.class);
     @UiField
-    Button createAccountButton;
+    Anchor createAccountButton;
     @UiField
     Button submitButton;
     @UiField
     TextBox username;
     @UiField
     TextBox password;
+
+    @Inject
+    GlobalEventBus eventBus;
 
     @Inject
     private NewAccountPage newAccountPage;
@@ -52,6 +55,7 @@ public class LoginPage extends Composite {
     public LoginPage() {
         LoginPageClientBundle.INSTANCE.css().ensureInjected();
         initWidget(ourUiBinder.createAndBindUi(this));
+        Hover.enableHover(createAccountButton);
     }
 
     @UiHandler("createAccountButton")
@@ -71,6 +75,7 @@ public class LoginPage extends Composite {
             public void onSuccess(UserInfo result) {
                 if(result.isLoggedIn()) {
                     mainPage.setPage(homePage);
+                    eventBus.fireEvent(new LoginEvent(result));
                 } else {
                     Window.alert("Failed to Log in");
                 }

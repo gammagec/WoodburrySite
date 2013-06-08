@@ -5,3 +5,19 @@ body {
     font-size: small;
     margin: 0;
 }
+
+.gwt-Anchor {
+    color: blue;
+    cursor: pointer;
+}
+
+.gwt-Button {
+    cursor: pointer;
+}
+
+.hovered {
+}
+
+.gwt-Anchor.hovered {
+    text-decoration: underline;
+}

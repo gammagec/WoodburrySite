@@ -10,12 +10,13 @@
                 <g:Label>Username:</g:Label><g:TextBox ui:field="username"/>
             </div>
             <div>
-                <g:Label>Password:</g:Label><g:TextBox ui:field="password"/>
+                <g:Label>Password:</g:Label><g:PasswordTextBox ui:field="password"/>
             </div>
             <div>
                 <g:Label>Email:</g:Label><g:TextBox ui:field="email"/>
             </div>
             <g:Button ui:field="submitButton">Submit</g:Button>
+            <g:Button ui:field="cancelButton">Cancel</g:Button>
         </g:HTMLPanel>
     </g:HTMLPanel>
 </ui:UiBinder>

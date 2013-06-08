@@ -3,6 +3,7 @@ package net.woodburry.client;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.core.client.GWT;
+import net.woodburry.shared.CreateUserAccountResponse;
 import net.woodburry.shared.UserInfo;
 
 /**
@@ -15,8 +16,10 @@ import net.woodburry.shared.UserInfo;
 public interface WoodburryServlet extends RemoteService {
 
     UserInfo getUser();
-    boolean createUserAccount(String userName, String email, String password);
+    CreateUserAccountResponse createUserAccount(String userName, String email, String password);
     UserInfo login(String userName, String password);
+    void logout();
+
     /**
      * Utility/Convenience class.
      * Use WoodburryServlet.App.getInstance() to access static instance of WoodburryServletAsync

@@ -4,6 +4,7 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
+import net.woodburry.client.events.LoginEvent;
 import net.woodburry.client.home_page.HomePage;
 import net.woodburry.client.login_page.LoginPage;
 import net.woodburry.shared.UserInfo;
@@ -31,6 +32,7 @@ public class WoodburrySite implements EntryPoint {
             public void onSuccess(UserInfo result) {
                 if(result.isLoggedIn()) {
                     injector.mainPage().setPage(injector.homePage());
+                    injector.globalEventBus().fireEvent(new LoginEvent(result));
                 } else {
                     injector.mainPage().setPage(injector.loginPage());
                 }

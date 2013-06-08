@@ -11,8 +11,14 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import net.woodburry.client.MainPage;
 import net.woodburry.client.WoodburryServlet;
+import net.woodburry.client.login_page.LoginPage;
+import net.woodburry.shared.CreateUserAccountResponse;
+
+import javax.inject.Provider;
 
 /**
  * Created with IntelliJ IDEA.
@@ -35,26 +41,40 @@ public class NewAccountPage extends Composite {
     Button submitButton;
     @UiField
     TextBox email;
+    @UiField
+    Button cancelButton;
+
+    @Inject
+    MainPage mainPage;
+
+    @Inject
+    Provider<LoginPage> loginPageProvider;
 
     public NewAccountPage() {
         NewAccountPageClientBundle.INSTANCE.css().ensureInjected();
         initWidget(ourUiBinder.createAndBindUi(this));
     }
 
+    @UiHandler("cancelButton")
+    void onCancelClicked(ClickEvent event) {
+        mainPage.setPage(loginPageProvider.get());
+    }
+
     @UiHandler("submitButton")
     void onSubmitButtonClicked(ClickEvent event) {
-        WoodburryServlet.App.getInstance().createUserAccount(username.getText(), email.getText(), password.getText(), new AsyncCallback<Boolean>() {
+        WoodburryServlet.App.getInstance().createUserAccount(username.getText(), email.getText(), password.getText(),
+                new AsyncCallback<CreateUserAccountResponse>() {
             @Override
             public void onFailure(Throwable caught) {
                 Window.alert("Failure: " + caught);
             }
 
             @Override
-            public void onSuccess(Boolean result) {
-                if(result) {
+            public void onSuccess(CreateUserAccountResponse result) {
+                if(result.isSuccess()) {
                     Window.alert("Success!");
                 } else {
-                    Window.alert("Failure!");
+                    Window.alert(result.getReason());
                 }
             }
         });

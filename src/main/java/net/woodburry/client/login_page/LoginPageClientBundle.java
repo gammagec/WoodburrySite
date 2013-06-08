@@ -16,8 +16,13 @@ public interface LoginPageClientBundle extends ClientBundle {
 
     interface MyCss extends CssResource {
         String loginPageBody();
-
         String loginPanel();
+        @ClassName("gwt-Label")
+        String gwtLabel();
+        String createAccountButton();
+        String loginButton();
+        String loginSign();
+        String loginSignText();
     }
 
     @Source("LoginPage.css")

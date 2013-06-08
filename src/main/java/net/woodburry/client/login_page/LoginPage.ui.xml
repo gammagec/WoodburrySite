@@ -2,8 +2,14 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
 
     <ui:with field="resources" type="net.woodburry.client.login_page.LoginPageClientBundle"/>
+    <ui:with field="common" type="net.woodburry.client.common.CommonClientBundle"/>
 
     <g:HTMLPanel styleName="{resources.css.loginPageBody}">
+
+        <g:Image addStyleNames="{resources.css.loginSign}"
+                 url="{common.sign.getSafeUri.asString}"/>
+        <g:Label addStyleNames="{resources.css.loginSignText}">Login:</g:Label>
+
         <g:HTMLPanel styleName="{resources.css.loginPanel}">
             <div>
                 <g:Label>Username:</g:Label>
@@ -11,11 +17,13 @@
             </div>
             <div>
                 <g:Label>Password:</g:Label>
-                <g:TextBox ui:field="password"/>
+                <g:PasswordTextBox ui:field="password"/>
             </div>
             <div>
-                <g:Button ui:field="submitButton">Login</g:Button>
-                <g:Button ui:field="createAccountButton">Create Account</g:Button>
+                <g:Button addStyleNames="{resources.css.loginButton}"
+                          ui:field="submitButton">Login</g:Button>
+                <g:Anchor addStyleNames="{resources.css.createAccountButton}"
+                          ui:field="createAccountButton">Create Account</g:Anchor>
             </div>
         </g:HTMLPanel>
     </g:HTMLPanel>
