@@ -1,0 +1,8 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <ui:with field="resources" type="net.woodburry.client.chat.ChatClientBundle"/>
+
+    <g:HTMLPanel visible="false" addStyleNames="{resources.css.chatEntryBox}">
+        <g:TextBox ui:field="text"/><g:Button ui:field="sendButton">Send</g:Button>
+    </g:HTMLPanel>
+</ui:UiBinder>

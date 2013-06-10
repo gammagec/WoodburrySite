@@ -1,0 +1,17 @@
+.chatEntryBox {
+    width: 200px;
+    height: 45px;
+    position: absolute;
+    right: 0px;
+    bottom: 45px;
+    background-color: orange;
+}
+
+.chatDisplay {
+    width: 200px;
+    position: absolute;
+    right: 0px;
+    bottom: 95px;
+    top: 45px;
+    background-color: purple;
+}

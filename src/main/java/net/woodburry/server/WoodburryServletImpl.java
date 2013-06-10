@@ -3,6 +3,7 @@ package net.woodburry.server;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.sun.deploy.net.HttpResponse;
 import net.woodburry.client.WoodburryServlet;
+import net.woodburry.shared.ChatMessage;
 import net.woodburry.shared.CreateUserAccountResponse;
 import net.woodburry.shared.UserInfo;
 import sun.misc.IOUtils;
@@ -19,6 +20,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -32,6 +34,7 @@ public class WoodburryServletImpl extends RemoteServiceServlet implements Woodbu
     public static final int HASH_BYTES = 24;
     public static final int PBKDF2_ITERATIONS = 1000;
     private static final String CONNECTOR = "connector";
+    private static final String MESSAGE_CONNECTOR = "messageConnector";
     private static final String LOGGED_IN_USER = "loggedInUser";
 
     private DataConnector dataConnector() {
@@ -43,6 +46,15 @@ public class WoodburryServletImpl extends RemoteServiceServlet implements Woodbu
         return dc;
     }
 
+    private MessageConnector messageConnector() {
+        MessageConnector mc = (MessageConnector)getServletContext().getAttribute(MESSAGE_CONNECTOR);
+        if(mc == null) {
+            mc = new OpenFireMessageConnector(getUser().getUserName());
+            getServletContext().setAttribute(MESSAGE_CONNECTOR, mc);
+        }
+        return mc;
+    }
+
     @Override
     public UserInfo getUser() {
         UserInfo user = (UserInfo)getServletContext().getAttribute(LOGGED_IN_USER);
@@ -52,10 +64,6 @@ public class WoodburryServletImpl extends RemoteServiceServlet implements Woodbu
         }
         return user;
     }
-
-    // test / test
-    // salt [B@2643e12a
-    // hash [B@3273a006
 
     @Override
     public CreateUserAccountResponse createUserAccount(String userName, String email, String password) {
@@ -103,6 +111,17 @@ public class WoodburryServletImpl extends RemoteServiceServlet implements Woodbu
     @Override
     public void logout() {
         getServletContext().setAttribute(LOGGED_IN_USER, null);
+    }
+
+    @Override
+    public ChatMessage[] getChatMessages() {
+        List<ChatMessage> msgs = messageConnector().getChatMessages();
+        return msgs.toArray(new ChatMessage[msgs.size()]);
+    }
+
+    @Override
+    public void sendChatMessage(String message) {
+        messageConnector().sendChatMessage(message);
     }
 
     @Override

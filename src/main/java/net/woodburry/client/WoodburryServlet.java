@@ -3,6 +3,7 @@ package net.woodburry.client;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.core.client.GWT;
+import net.woodburry.shared.ChatMessage;
 import net.woodburry.shared.CreateUserAccountResponse;
 import net.woodburry.shared.UserInfo;
 
@@ -19,6 +20,8 @@ public interface WoodburryServlet extends RemoteService {
     CreateUserAccountResponse createUserAccount(String userName, String email, String password);
     UserInfo login(String userName, String password);
     void logout();
+    ChatMessage[] getChatMessages();
+    void sendChatMessage(String message);
 
     /**
      * Utility/Convenience class.

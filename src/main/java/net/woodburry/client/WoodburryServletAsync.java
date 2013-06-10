@@ -1,6 +1,7 @@
 package net.woodburry.client;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import net.woodburry.shared.ChatMessage;
 import net.woodburry.shared.CreateUserAccountResponse;
 import net.woodburry.shared.UserInfo;
 
@@ -15,4 +16,8 @@ public interface WoodburryServletAsync {
     void login(String userName, String password, AsyncCallback<UserInfo> async);
     void logout(AsyncCallback<Void> async);
     void createUserAccount(String userName, String email, String password, AsyncCallback<CreateUserAccountResponse> async);
+
+    void getChatMessages(AsyncCallback<ChatMessage[]> async);
+
+    void sendChatMessage(String message, AsyncCallback<Void> async);
 }
