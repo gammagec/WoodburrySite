@@ -79,8 +79,8 @@ public class OpenFireMessageConnector implements MessageConnector, PacketListene
         connection = new XMPPConnection(config);
         connection.connect();
         SASLAuthentication.supportSASLMechanism("PLAIN", 0);
-        connection.login("woodburry", "woodburry");
-
+        //connection.login("woodburry", "woodburry");
+        connection.loginAnonymously();
         chatRoom = new MultiUserChat(connection, CHAT_ROOM_NAME);
         chatRoom.join(userName);
         chatRoom.addMessageListener(this);
